@@ -1,39 +1,26 @@
-
 language: android
 jdk: oraclejdk8
-
 android:
   components:
-    # Uncomment the lines below if you want to
-    # use the latest revision of Android SDK Tools
-    # - tools
-    # - platform-tools
-
-    # The BuildTools version used by your project
-    - build-tools-28.0.3
-
-    # The SDK version used to compile your project
-    - android-28
-
-    # Additional components
-    - extra-google-google_play_services
-    - extra-google-m2repository
-    - extra-android-m2repository
-
-    # Specify at least one system image,
-    # if you need to run emulator(s) during your tests
-    # - sys-img-x86-android-26
-    # - sys-img-armeabi-v7a-android-17
-
+  - build-tools-28.0.3
+  - android-28
+  - extra-google-google_play_services
+  - extra-google-m2repository
+  - extra-android-m2repository
 before_cache:
-  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
-    - $HOME/.gradle/caches/
-    - $HOME/.gradle/wrapper/
-    - $HOME/.android/build-cache
-
+  - "$HOME/.gradle/caches/"
+  - "$HOME/.gradle/wrapper/"
+  - "$HOME/.android/build-cache"
 script:
 - "./gradlew clean build test"
-
+deploy:
+  provider: releases
+  api_key:
+    secure: d65r+ECHLeHgnwH/TMtIi8bzVViLs+Q6su+7zgAgIt6rGEV6pKNJkVmb5g+9oO0ix0thmhMLhKA8bpfLR3hZOr+cyxMIpN+p/iRp71Rr0nTDf/oNiZPIhXWwcKh3R+eyegUlUskDMn7tuJXkHkPU1XhIF7MvaKBlP0QUmJ4MNfjXsi2YqUPY72338RcJIC1gifkTKC9g1C9RzHwBX5vgYR8cXjH5WgAY827FIekg1/oqEXQcs5N+ioy6hOgP0I5AfM8N/Ybs5E38RhR+K92BwLt/G479mjzvuEk0UOyulgs0rQm6q1D8p4HT4TilI780v+MYAG86EHVkfccmxgD83RRJaQ2suGqmEwK4zgulX8q23CLJWrOAYPLk/nwwFnFi9+SbfLTVLPNjyzzXUP8t5bIEGCevxjKIhFJUtrbLOovYUJMTOgGdKWAeLFW2V6r9aEc+yDIOXolLHl0CJWDD/sE1tupSd4Asrbgsizhq+fwLhFXaj3aD484NjdAMfJ2k2pplRXkOHlBIJapPJWpIuX3xlBFWQy5P9FSfR7MvccnrO8fq+eL0Hy9UD8zkshTfLjvMCO+fI3AnglwSPkThiezLDCbjMjxYnN6exmEUYnR5HTxKh8hdL1V4aAtwby1SsrwkWyV0yFSfTtSP4MiqbKOKqJdbQ1daboamRvv2oG0=
+  file: build/output
+  on:
+    repo: bsia/kirin-app
